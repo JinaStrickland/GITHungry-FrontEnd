@@ -1,7 +1,7 @@
-import React from 'react'
-import MainContainer from '../container/MainContainer'
-import Header from '../components/Header'
-import Navbar from '../components/Navbar'
+import React, { Component } from 'react'
+import MainContainer from './container/MainContainer'
+import Header from './components/Header'
+import Navbar from './components/Navbar'
 
 
 class App extends Component {
@@ -9,6 +9,7 @@ class App extends Component {
   render(){
     return (
       <div >
+        hello
         <div>
           <Header />
         </div>

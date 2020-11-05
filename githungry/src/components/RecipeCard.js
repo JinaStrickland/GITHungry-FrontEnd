@@ -5,7 +5,7 @@ const RecipeCard = (props) => {
   return (
 
     <div>
-
+        RecipeCard
     </div>
 
 )};

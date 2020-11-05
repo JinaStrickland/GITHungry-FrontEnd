@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import RecipeContainer from './RecipeContainer'
 import BookmarkContainer from './BookmarkContainer'
 import UserDetailContainer from './UserDetailContainer'
