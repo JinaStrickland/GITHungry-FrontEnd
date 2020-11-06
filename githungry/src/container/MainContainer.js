@@ -14,7 +14,7 @@ class MainContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(API)
+    fetch(API + "recipes")
     .then(res => res.json())
     .then(console.log)
   }
