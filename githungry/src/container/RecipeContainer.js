@@ -6,7 +6,7 @@ class RecipeContainer extends Component {
 
   render(){
     return (
-      <div className="App">
+      <div >
         <div>
         { this.props.recipes.map(recipe => <RecipeCard key={ recipe.id }
                                                               recipe={ recipe } /> )}
