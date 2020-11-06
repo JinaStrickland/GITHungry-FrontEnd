@@ -8,7 +8,8 @@ class RecipeContainer extends Component {
     return (
       <div className="App">
         <div>
-          <RecipeCard />
+        { this.props.recipes.map(recipe => <RecipeCard key={ recipe.id }
+                                                              recipe={ recipe } /> )}
         </div>
       </div>
     );
