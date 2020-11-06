@@ -9,14 +9,19 @@ const API = "http://localhost:3000/"
 class MainContainer extends Component {
 
   state = {
-    recipes = [],
-    bookmark = []
+    recipes: [],
+    bookmark: []
   }
 
   componentDidMount() {
-    fetch(API)
+    fetch(API + "recipes")
     .then(res => res.json())
-    .then(console.log)
+    .then(recipes => {
+      console.log(recipes)
+      this.setState({
+      recipes: recipes 
+    })}
+    )
   }
 
   render(){
