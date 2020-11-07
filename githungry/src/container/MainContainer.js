@@ -17,7 +17,6 @@ class MainContainer extends Component {
     fetch(API + "recipes")
     .then(res => res.json())
     .then(recipes => {
-      console.log(recipes)
       this.setState({
       recipes: recipes 
     })}
