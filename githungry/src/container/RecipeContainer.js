@@ -8,10 +8,16 @@ class RecipeContainer extends Component {
     return (
       <div >
         <div>
-        { this.props.recipes.map(recipe => <RecipeCard key={ recipe.id }
-                                                              recipe={ recipe } /> )}
+        <div class="ui four column grid">
+          { this.props.recipes.map(recipe => 
+          <div class="column">
+              <div className="ui fluid cards">
+            <RecipeCard key={ recipe.id } recipe={ recipe } /> 
+              </div>
+          </div>)}
         </div>
       </div>
+    </div>
     );
   }
 }

@@ -1,0 +1,29 @@
+img.githungry-logo {
+  position: relative;
+  width: 34%;
+  height: 32%;
+  left: 35%;
+}
+
+.ui.green.menu{
+  position: relative;
+  z-index: 1;
+}
+.main-container{
+  background-color: gray;
+}
+
+.card{
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  /* padding: 10px; */
+}
+
+.form-control{
+  margin-bottom: 20px;
+}
+
+.error{
+  color: red
+}

@@ -5,7 +5,8 @@ const Header = (props) => {
   return (
 
     <div>
-        HEADER
+      <h1> hello pic here</h1>
+        <img class="githungry-logo" src="https://i.ibb.co/HFm5hSP/GIT-HUNGRY.png" />
     </div>
 
 )};

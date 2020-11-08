@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card } from 'semantic-ui-react'
 
 const RecipeCard = (props) => {
 
@@ -8,9 +9,7 @@ const RecipeCard = (props) => {
   tags = JSON.parse(tags)
 
   return (
-    <div className="ui three column grid">
-      <div className="column">
-      <div className="ui fluid cards">
+    <div className="ui fluid cards">
       <div className="card">
         <div className="image">
           <img src={ image }/>
@@ -19,8 +18,6 @@ const RecipeCard = (props) => {
           <a className="header">{ title }</a>
         </div>
       </div>
-      </div>
-    </div>
     </div>
 
   )

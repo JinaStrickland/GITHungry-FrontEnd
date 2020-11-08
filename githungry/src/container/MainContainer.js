@@ -3,6 +3,7 @@ import RecipeContainer from './RecipeContainer'
 import BookmarkContainer from './BookmarkContainer'
 import UserDetailContainer from './UserDetailContainer'
 import Filter from '../components/Filter'
+import { Container } from 'semantic-ui-react'
 
 const API = "http://localhost:3000/"
 
@@ -26,9 +27,9 @@ class MainContainer extends Component {
   render(){
     return (
       <div >
+        <Container class="main-container">
         <div>
           <RecipeContainer recipes={ this.state.recipes } />
-          
         </div>
         <div>
           <Filter />
@@ -39,7 +40,7 @@ class MainContainer extends Component {
         <div>
           <UserDetailContainer />
         </div>
-    
+      </Container>
       </div>
     );
   }
