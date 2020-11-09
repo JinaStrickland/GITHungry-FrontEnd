@@ -14,6 +14,9 @@ const Navbar = (props) => {
         <a class="item">
           Bookmarked
         </a>
+        <a class="item">
+          Add Recipe
+        </a>
         <div class="right menu">
           <div class="item">
             <div class="ui icon input">
