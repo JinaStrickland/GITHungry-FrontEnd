@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
 import RecipeContainer from './RecipeContainer'
 import BookmarkContainer from './BookmarkContainer'
 import UserDetailContainer from './UserDetailContainer'
 import Filter from '../components/Filter'
-import { Container } from 'semantic-ui-react'
+import RecipeDetails from '../components/RecipeDetails'
 
 const API = "http://localhost:3000/"
 
@@ -11,7 +13,9 @@ class MainContainer extends Component {
 
   state = {
     recipes: [],
-    bookmark: []
+    bookmark: [],
+    clicked: false,
+    clickedRecipeId: []
   }
 
   componentDidMount() {
@@ -24,16 +28,35 @@ class MainContainer extends Component {
     )
   }
 
+  showRecipeDetailClick = (id) => {
+    console.log("clicked");
+    console.log(id);
+    this.setState({
+      clicked: !this.state.clicked,
+      clickedRecipeId: id
+    })
+  }
+
   render(){
+
+    let id = this.state.clickedRecipeId
+
     return (
       <div >
-        <Container class="main-container">
+        <Container className="main-container">
         <div>
-          <RecipeContainer recipes={ this.state.recipes } />
+          <RecipeContainer  recipes={ this.state.recipes }
+                            showRecipeDetailClick={ this.showRecipeDetailClick } />
         </div>
         <div>
           <Filter />
         </div>
+          <div>
+            { this.state.clicked ? 
+              <Redirect to={`/recipes/${id}`} />
+              :
+              null }
+          </div>
         <div>
           <BookmarkContainer />
         </div>

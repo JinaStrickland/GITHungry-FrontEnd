@@ -3,24 +3,24 @@ import { Card } from 'semantic-ui-react'
 
 const RecipeCard = (props) => {
 
-  let { title, cuisine_type, image, meal_type,  servings, tags, ingredients, instructions } = props.recipe 
-  ingredients = JSON.parse(ingredients)
-  instructions = JSON.parse(instructions)
-  tags = JSON.parse(tags)
+    let { id, title, image } = props.recipe 
+  
+    return (
 
-  return (
-    <div className="ui fluid cards">
-      <div className="card">
-        <div className="image">
-          <img src={ image }/>
-        </div>
-        <div className="content">
-          <a className="header">{ title }</a>
+      <div className="ui fluid cards">
+        <div className="card" onClick={ () => props.showRecipeDetailClick(id) }>
+          <div className="image">
+            <img src={ image }/>
+          </div>
+          <div className="content">
+            <div className="header"> 
+              { title } 
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-  )
+    )
 }
 
 export default RecipeCard;

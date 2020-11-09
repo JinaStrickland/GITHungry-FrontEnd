@@ -6,8 +6,7 @@ class Homepage extends Component {
   render(){
     return(
       <div>
-        <h1>Homepage with login form</h1>
-        <RecipeForm />
+        <h1>Welcome to Git Hungry</h1>
       </div>
     )
   }

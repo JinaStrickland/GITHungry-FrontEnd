@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import './App.css'
-import Homepage from './container/Homepage'
+import { Container } from 'semantic-ui-react'
+import UserForm from './components/UserForm'
 import MainContainer from './container/MainContainer'
 import Header from './components/Header'
 import Navbar from './components/Navbar'
-import { Container } from 'semantic-ui-react'
+import RecipeDetails from './components/RecipeDetails'
 
 
 class App extends Component {
@@ -14,17 +16,21 @@ class App extends Component {
       <Container>
       <div >
         <div>
-          <Homepage />
-        </div>
-        <div>
           <Header />
         </div>
         <div>
           <Navbar />
         </div>
-        <div>
-          <MainContainer />
-        </div>
+        
+        <Switch >
+          <Route exact path="/login" component={ UserForm } />
+        
+    
+          <Route exact path="/recipes/:id" component={ RecipeDetails }/>
+          <Route exact path="/recipes" component={ MainContainer }/>
+       
+
+        </Switch>
       </div>
     </Container>
     );
