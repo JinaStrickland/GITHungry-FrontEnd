@@ -1,30 +1,42 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import BookmarkContainer from '../container/BookmarkContainer'
+import RecipeForm from './RecipeForm'
+import Homepage from '../container/Homepage'
 
 const Navbar = (props) => {
 
   return (
     <div>
-      <div class="ui green menu">
-        <a class="active item">
+      <div className="ui green menu">
+        <a className="active item">
+        <Link to="/homepage" render={ () => { return <Homepage/> }}>
           Home
+          </Link>
         </a>
-        <a class="item">
+        <a className="item">
+        <Link to="/myprofile" render={ () => { return <RecipeForm/> }}>
           Profile
+          </Link>
         </a>
-        <a class="item">
+        <a className="item">
+          <Link to="/userpage" render={ () => { return <BookmarkContainer/> }}>
           Bookmarked
+          </Link>
         </a>
-        <a class="item">
+        <a className="item">
+        <Link to="/addrecipe" render={ () => { return <RecipeForm/> }}>
           Add Recipe
+          </Link>
         </a>
-        <div class="right menu">
-          <div class="item">
-            <div class="ui icon input">
+        <div className="right menu">
+          <div className="item">
+            <div className="ui icon input">
               <input type="text" placeholder="Search..."/>
-              <i class="search link icon"></i>
+              <i className="search link icon"></i>
             </div>
           </div>
-          <a class="ui item">
+          <a className="ui item">
             Logout
           </a>
         </div>

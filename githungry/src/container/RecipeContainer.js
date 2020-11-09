@@ -8,7 +8,7 @@ class RecipeContainer extends Component {
     return (
       <div >
         <div>
-        <div class="ui four column grid">
+        <div className="ui four column grid">
           { this.props.recipes.map(recipe => 
           <div class="column">
               <div className="ui fluid cards">

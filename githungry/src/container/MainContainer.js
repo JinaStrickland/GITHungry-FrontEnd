@@ -4,6 +4,7 @@ import BookmarkContainer from './BookmarkContainer'
 import UserDetailContainer from './UserDetailContainer'
 import Filter from '../components/Filter'
 import { Container } from 'semantic-ui-react'
+import { Route } from 'react-router-dom'
 
 const API = "http://localhost:3000/"
 
@@ -27,7 +28,7 @@ class MainContainer extends Component {
   render(){
     return (
       <div >
-        <Container class="main-container">
+        <Container className="main-container">
         <div>
           <RecipeContainer recipes={ this.state.recipes } />
         </div>
