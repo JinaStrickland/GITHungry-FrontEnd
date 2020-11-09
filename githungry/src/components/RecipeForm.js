@@ -1,8 +1,9 @@
 import React from 'react'
-import { useFormik } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 const foodTags = ["Soups and Stews", "Poultry", "Fish", "Healthy", "Dairy Free", "Gluten Free", "Vegan", "Vegetarian", "Egg Free", "Seafood"]
 
+const cuisineTags = ["Appetizer", ""]
 const initialValues = {
   title: "", 
   ingredients: [], 
@@ -20,147 +21,164 @@ const onSubmit = values => {
 }
 
 const validate = values => {
-
+  let errors = {}
+  if(!values.title){
+    errors.title = "Title is required!"
+  }
+  if(!values.ingredients){
+    errors.ingredients = "Ingredients are required!"
+  }
+  if(!values.instructions){
+    errors.instructions = "Instructions are required!"
+  }
+  if(!values.cuisine_type){
+    errors.cuisine_type = "Please choose one of the following."
+  }
+  if(!values.meal_type){
+    errors.meal_type = "Please choose one of the following."
+  }
+  if(!values.tags){
+    errors.tags = "Please choose the following." 
+  }
+  if(!values.image){
+    errors.image = "Please upload an image"
+  }
+  return errors
 }
 
 function RecipeForm() {
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validate
-  })
-
+  // const formik = useFormik({
+  //   initialValues,
+  //   onSubmit,
+  //   validate
+  // )}
   return(
-    <div>
-        <form onSubmit={formik.handleSubmit}>
+    <Formik
+    initialValues={initialValues}
+    onSubmit={onSubmit}
+    validate={validate}>
+        <Form class="ui form">
           <div className='form-control'>
           <label>Title: </label>
-          <input
+          <Field
             type="text"
             id="title"
             name="title"
             placeholder="Title..."
-          {... formik.getFieldProps('title')}
-          />
-          {formik.touched.title && formik.errors.title ? (
-          <div className='error'>{formik.errors.title}</div>)
-           : null}
+            />
+          <ErrorMessage name="title">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <div className='form-control'>
           <label>Ingredients: </label>
-          <input
-            type="text"
+          <Field
+            as="textarea"
             id="ingredients"
             name="ingredients"
             placeholder="Ingredients..."
-            {... formik.getFieldProps('ingredients')}
-          />
-          {formik.touched.ingredients && formik.errors.ingredients ? (
-          <div className='error'>{formik.errors.ingredients}</div>)
-           : null}
+            />
+          <ErrorMessage name="ingredients">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <div className='form-control'>
           <label>Instructions: </label>
-          <input
-            type="text"
+          <Field
+            as="textarea"
             id="instructions"
             name="instructions"
             placeholder="Instructions..."
-            {... formik.getFieldProps('instructions')}
-          />
-          {formik.touched.instructions && formik.errors.instructions ? (
-          <div className='error'>{formik.errors.instructions}</div>)
-           : null}
+            />
+          <ErrorMessage name="instructions">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <div className='form-control'>
           <label>Type Of Cuisine: </label>
-          <input
+          <Field
             type="text"
             id="cuisine_type"
             name="cuisine_type"
             placeholder="Cuisine Type"
-            {... formik.getFieldProps('cuisine_type')}
-          />
-          {formik.touched.cuisine_type && formik.errors.cuisine_type ? (
-          <div className='error'>{formik.errors.cuisine_type}</div>)
-           : null}
+            />
+          <ErrorMessage name="cuisine_type">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <div className='form-control'>
           <label>Type of Meal: </label>
-          <input
+          <Field
             type="text"
             id="meal_type"
             name="meal_type"
-            {... formik.getFieldProps('meal_type')}
-          />
-          {formik.touched.meal_type && formik.errors.meal_type ? (
-          <div className='error'>{formik.errors.meal_type}</div>)
-           : null}
+            />
+          <ErrorMessage name="meal_type">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <div className='form-control'>
           <label>Total Cooking Time: </label>
-          <input
+          <Field
             type="number"
             id="cooking_time"
             name="cooking_time"
-            {... formik.getFieldProps('cooking_time')}
-          />
-          {formik.touched.cooking_time && formik.errors.cooking_time ? (
-          <div className='error'>{formik.errors.cooking_time}</div>)
-           : null}
+            />
           </div>
           <br/>
           <div className='form-control'>
           <label>Servings: </label>
-          <input
+          <Field
             type="number"
             id="servings"
             name="servings"
-            placeholder="Ingredients"
-            {... formik.getFieldProps('servings')}
-          />
-          {formik.touched.servings && formik.errors.servings ? (
-          <div className='error'>{formik.errors.servings}</div>)
-           : null}
+            />
           </div>
           <br/>
           <div className='form-control'>
           <label>Select Tags: </label>
-          <input
+          {foodTags.map(foodTag => {
+          return (
+            <div>
+          <div> {foodTag} </div>
+          <Field 
+             
+            class="ui checkbox"
             type="checkbox"
-            id="tags"
-            name="tags"
-            placeholder="Ingredients"
-            {... formik.getFieldProps('tags')}
-          />
-          {formik.touched.tags && formik.errors.tags ? (
-          <div className='error'>{formik.errors.tags}</div>)
-           : null}
+            id={foodTag}
+            name={foodTag}
+            /> 
+            </div>
+          )
+          })
+        }
+          <ErrorMessage name="tags">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <div className='form-control'>
           <label>Image URL: </label>
-          <input
-            type="numtextber"
+          <Field
+            type="text"
             id="image"
             name="image"
-            placeholder="Ingredients"
-            {... formik.getFieldProps('image')}
-          />
-          {formik.touched.image && formik.errors.image ? (
-          <div className='error'>{formik.errors.image}</div>)
-           : null}
+            />
+          <ErrorMessage name="image">
+            {errorMsg => <div className="error">{errorMsg}</div>}
+          </ErrorMessage>
           </div>
           <br/>
           <button>Submit</button>
-        </form>
-    </div>
+        </Form>
+    </Formik>
   )
 }
+
 
 export default RecipeForm
