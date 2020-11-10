@@ -9,7 +9,7 @@ const RecipeContainer = (props) => {
         <div>
         <div className="ui four column grid">
           { props.recipes.map(recipe => 
-          <div class="column">
+          <div className="column">
               <div className="ui fluid cards">
                 <RecipeCard key={ recipe.id } 
                             recipe={ recipe }

@@ -20,7 +20,8 @@ const validate = values => {
   }
   return errors
 }
-function UserSignUpForm () {
+
+function UserSignUpForm() {
 
   return (
     <Formik

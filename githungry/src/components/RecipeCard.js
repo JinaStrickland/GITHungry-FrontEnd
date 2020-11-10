@@ -7,7 +7,7 @@ const RecipeCard = (props) => {
   
     return (
 
-      <div className="ui fluid cards">
+      <div className="ui fluid cards" id="cards">
         <div className="card" onClick={ () => props.showRecipeDetailClick(id) }>
           <div className="image">
             <img src={ image }/>

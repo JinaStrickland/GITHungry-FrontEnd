@@ -1,44 +1,47 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import BookmarkContainer from '../container/BookmarkContainer'
-import RecipeForm from './RecipeForm'
-import Homepage from '../container/Homepage'
+import BookmarkContainer from '../container/BookmarkContainer';
+import Homepage from '../container/Homepage';
+import RecipeForm from './RecipeForm';
 
 const Navbar = (props) => {
 
   return (
     <div>
-      <div className="ui green menu">
-        <a className="active item">
-        <Link to="/homepage" render={ () => { return <Homepage/> }}>
-          Home
+      <div class="ui green menu">
+        <div class="active item">
+          <Link to="/homepage" render={() => { return <Homepage /> }}>
+            Home
           </Link>
-        </a>
-        <a className="item">
-        <Link to="/myprofile" render={ () => { return <RecipeForm/> }}>
-          Profile
+        </div>
+
+        <div class="item">
+          <Link to="/myprofile" render={() => {  }}>
+            Profile
           </Link>
-        </a>
-        <a className="item">
-          <Link to="/userpage" render={ () => { return <BookmarkContainer/> }}>
+        </div>
+        <div class="item">
+        <Link to="/mypage" render={() => { return <BookmarkContainer /> }}>
           Bookmarked
-          </Link>
-        </a>
-        <a className="item">
-        <Link to="/addrecipe" render={ () => { return <RecipeForm/> }}>
+            </Link>
+        </div>
+        <div class="item">
+        <Link to="/addrecipe" render={() => { return <RecipeForm /> }}>
           Add Recipe
-          </Link>
-        </a>
-        <div className="right menu">
-          <div className="item">
-            <div className="ui icon input">
+            </Link>
+        </div>
+        <div class="right menu">
+          <div class="item">
+            <div class="ui icon input">
               <input type="text" placeholder="Search..."/>
-              <i className="search link icon"></i>
+              <i class="search link icon"></i>
             </div>
           </div>
-          <a className="ui item">
+          <div class="ui item">
+          <Link to="/" render={() => { }}>
             Logout
-          </a>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

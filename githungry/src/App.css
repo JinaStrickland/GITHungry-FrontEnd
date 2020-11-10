@@ -9,9 +9,10 @@ img.githungry-logo {
   position: relative;
   z-index: 1;
 }
-.main-container{
+
+/* .main-container{
   background-color: gray;
-}
+} */
 
 .card{
   width: 50%;
@@ -32,3 +33,24 @@ img.githungry-logo {
   color: red
 }
 
+.image{
+  width: 300px;
+  height: 500px;
+}
+
+#cards{
+  width: 300px;
+  height: 600px;
+}
+
+#detail-card{
+  position: center;
+  /* width: 50%;
+  height: 50%; */
+}
+
+#detail-image{
+  position: center;
+  width: 30%;
+  height: 30%;
+}

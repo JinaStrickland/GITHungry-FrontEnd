@@ -29,8 +29,6 @@ class MainContainer extends Component {
   }
 
   showRecipeDetailClick = (id) => {
-    console.log("clicked");
-    console.log(id);
     this.setState({
       clicked: !this.state.clicked,
       clickedRecipeId: id
