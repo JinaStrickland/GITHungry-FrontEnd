@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
 
-function UserForm() {
+function UserLogInForm() {
 
   const formik = useFormik({
     initialValues: {
@@ -72,4 +72,4 @@ function UserForm() {
     )
 }
 
-export default UserForm
+export default UserLogInForm

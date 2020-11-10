@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 const foodTags = ["Soups and Stews", "Poultry", "Fish", "Healthy", "Dairy Free", "Gluten Free", "Vegan", "Vegetarian", "Egg Free", "Seafood"]
 
 const cuisineTags = ["Appetizer", ""]
+
 const initialValues = {
   title: "", 
   ingredients: [""], 
