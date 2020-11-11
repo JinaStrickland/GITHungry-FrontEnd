@@ -8,36 +8,36 @@ const Navbar = (props) => {
 
   return (
     <div>
-      <div class="ui green menu">
-        <div class="active item">
+      <div className="ui green menu">
+        <div className="active item">
           {/* <Link to="/homepage" render={() => { return <Homepage /> }}> */}
             Home
           {/* </Link> */}
         </div>
 
-        <div class="item">
+        <div className="item">
           {/* <Link to="/myprofile" render={() => {  }}> */}
             Profile
           {/* </Link> */}
         </div>
-        <div class="item">
+        <div className="item">
         {/* <Link to="/mypage" render={() => { return <BookmarkContainer /> }}> */}
           Bookmarked
             {/* </Link> */}
         </div>
-        <div class="item">
+        <div className="item">
         <Link to="/addrecipe" render={() => { return <RecipeForm /> }}>
           Add Recipe
             </Link>
         </div>
-        <div class="right menu">
-          <div class="item">
-            <div class="ui icon input">
+        <div className="right menu">
+          <div className="item">
+            <div className="ui icon input">
               <input type="text" placeholder="Search..."/>
-              <i class="search link icon"></i>
+              <i className="search link icon"></i>
             </div>
           </div>
-          <div class="ui item">
+          <div className="ui item">
           {/* <Link to="/" render={() => { }}> */}
             Logout
             {/* </Link> */}

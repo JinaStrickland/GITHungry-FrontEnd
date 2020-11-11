@@ -184,7 +184,7 @@ function RecipeForm() {
             <div>
               <div> {foodTag} </div>
               <Field 
-                  class="ui checkbox"
+                  className="ui checkbox"
                   type="checkbox"
                   id={foodTag}
                   name={foodTag}

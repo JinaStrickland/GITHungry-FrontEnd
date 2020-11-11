@@ -4,7 +4,7 @@ import RecipeCard from '../components/RecipeCard'
 
 const RecipeContainer = (props) => {
 
-    return (
+  return (
 
       <div>
         <div className="ui four column grid">

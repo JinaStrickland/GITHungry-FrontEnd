@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom';
 
 class RecipeDetails extends Component {
 
@@ -22,6 +22,7 @@ class RecipeDetails extends Component {
     let instructionsArray = instr.split("*")
     let foodTags = `${tags}`
     let tagsArray = foodTags.split("*")
+    console.log(sourceURL)
 
     return (
 
@@ -52,8 +53,10 @@ class RecipeDetails extends Component {
               <br />
                 Instructions:  { instructionsArray.map(instruction => <li> {instruction} </li>) }
               <br />
-                Source:  { sourceURL }
-              <br />
+              <h5>
+                Source: <Link to={`${sourceURL}`}> { sourceURL } </Link>
+              </h5>
+              <br5/>
               </h3>
             </div>
           </div>

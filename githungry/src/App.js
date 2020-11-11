@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Route, Switch, Redirect } from 'react-router-dom';
 import './App.css'
 import { Container } from 'semantic-ui-react'
 import UserDetailContainer from './container/UserDetailContainer';
@@ -26,13 +26,20 @@ class App extends Component {
     clickedRecipeId: []
   }
 
-  async componentDidMount() {
-    const response = await fetch(API + "recipes")
-    const recipes = await response.json()
-    this.setState({ recipes })
+  // async componentDidMount() {
+  //   const response = await fetch(API + "recipes")
+  //   const recipes = await response.json()
+  //   this.setState({ recipes })
+  // }
+
+  componentDidMount() {
+    fetch(API + "recipes")
+    .then(res => res.json())
+    .then(recipes => this.setState({ recipes: recipes }))
   }
 
   showRecipeDetailClick = (id) => {
+    console.log(id)
     this.setState({
       clicked: !this.state.clicked,
       clickedRecipeId: id
@@ -41,8 +48,8 @@ class App extends Component {
 
 
   render(){
-
     let id = this.state.clickedRecipeId
+    const x = true 
 
     return (
       <Container>
@@ -55,25 +62,32 @@ class App extends Component {
             <Navbar />
           </div>
           
-          <Switch >
-              <Route exact path="/login" component={ UserLogInForm } />
-              <Route exact path="/homepage" component={ Homepage }/>
-              <Route exact path="/myprofile" component={ UserDetailContainer }/>
-              <Route exact path="/mypage" component={ BookmarkContainer }/>
-              <Route exact path="/recipes/:id" component={ RecipeDetails }/>
-              <Route exact path="/addrecipe" component={ RecipeForm }/>
-              <Route exact path="/filter" component={ Filter }/>
-              <Route exact path="/recipes" render={ () => {
+          <div>
+            <Switch >
+                <Route exact path="/homepage" component={ Homepage }/>
+                <Route exact path="/login" component={ UserLogInForm } />
+                <Route exact path="/myprofile" component={ UserDetailContainer }/>
+                <Route exact path="/mypage" component={ BookmarkContainer }/>
+                <Route exact path="/addrecipe" component={ RecipeForm }/>
+                <Route exact path="/filter" component={ Filter }/>
+                <Route exact path="/recipes/:id" component={ RecipeDetails }/>
+                <Route exact path="/recipes" render={ () => x ? <RecipeContainer  recipes={ this.state.recipes } showRecipeDetailClick={ this.showRecipeDetailClick } /> : null }/>
+                {/* <Route exact path="/recipes" render={ () => this.state.recipes ? 
                   <RecipeContainer  recipes={ this.state.recipes }
                                     showRecipeDetailClick={ this.showRecipeDetailClick } />
-              }}/>
-            </Switch>
-        
-        
+                  : null
+                }/> */}
+                {/* <Route exact path="/recipes" render={ () => {
+                  <RecipeContainer  recipes={ this.state.recipes }
+                                    showRecipeDetailClick={ this.showRecipeDetailClick } />}}/> */}
+              </Switch>
           </div>
-          <div>
-            <Filter />
-          </div>
+
+          {/* <div>
+            <RecipeContainer  recipes={ this.state.recipes }
+                              showRecipeDetailClick={ this.showRecipeDetailClick } />
+          </div> */}
+        
             <div>
               { this.state.clicked ? 
                 <Redirect to={`/recipes/${id}`} />
@@ -81,7 +95,6 @@ class App extends Component {
                 null }  
             </div>
        
-          <div>
         </div>
       </Container>
     );

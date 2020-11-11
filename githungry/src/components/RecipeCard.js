@@ -5,8 +5,9 @@ const RecipeCard = (props) => {
     let { id, title, image } = props.recipe 
   
     return (
+      <div>
 
-      <div className="ui fluid cards" id="cards">
+      { props.recipe ? <div className="ui fluid cards" id="cards">
         <div className="card" onClick={ () => props.showRecipeDetailClick(id) }>
           <div className="image">
             <img src={ image }/>
@@ -17,8 +18,9 @@ const RecipeCard = (props) => {
             </div>
           </div>
         </div>
+      </div> : null }
+      
       </div>
-
     )
 }
 

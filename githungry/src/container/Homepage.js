@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import UserForm from '../components/UserLogInForm'
-import RecipeForm from '../components/RecipeForm'
+import React, { Component } from 'react';
+import UserForm from '../components/UserLogInForm';
+import RecipeForm from '../components/RecipeForm';
 
 class Homepage extends Component {
   
