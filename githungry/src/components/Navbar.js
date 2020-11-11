@@ -10,20 +10,20 @@ const Navbar = (props) => {
     <div>
       <div class="ui green menu">
         <div class="active item">
-          <Link to="/homepage" render={() => { return <Homepage /> }}>
+          {/* <Link to="/homepage" render={() => { return <Homepage /> }}> */}
             Home
-          </Link>
+          {/* </Link> */}
         </div>
 
         <div class="item">
-          <Link to="/myprofile" render={() => {  }}>
+          {/* <Link to="/myprofile" render={() => {  }}> */}
             Profile
-          </Link>
+          {/* </Link> */}
         </div>
         <div class="item">
-        <Link to="/mypage" render={() => { return <BookmarkContainer /> }}>
+        {/* <Link to="/mypage" render={() => { return <BookmarkContainer /> }}> */}
           Bookmarked
-            </Link>
+            {/* </Link> */}
         </div>
         <div class="item">
         <Link to="/addrecipe" render={() => { return <RecipeForm /> }}>
@@ -38,9 +38,9 @@ const Navbar = (props) => {
             </div>
           </div>
           <div class="ui item">
-          <Link to="/" render={() => { }}>
+          {/* <Link to="/" render={() => { }}> */}
             Logout
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
       </div>

@@ -7,13 +7,11 @@ class RecipeDetails extends Component {
     recipe: []
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let id = parseInt(this.props.match.params.id) 
-    console.log(id)
-
-    fetch("http://localhost:3000/recipes/" + id)
-    .then(res => res.json())
-    .then(recipe => this.setState({ recipe }))
+      const response = await fetch("http://localhost:3000/recipes/" + id)
+      const recipe = await response.json()
+      this.setState({ recipe })
   }
 
   render() {
@@ -35,31 +33,35 @@ class RecipeDetails extends Component {
           <div className="image" id="detail-image">
             <img src={ image } alt=""/>
           </div>
-          <div className="content">
-          <div className="extra">
-            <h3>
-              Cooking Time:  { cooking_time } minutes
-            <br />
-              Servings:  { servings } 
-            <br />
-              Cuisine Type:  { cuisine_type }
-            <br />
-              Meal Type:  { meal_type }
-            <br />
-            <br />
-              Tags:  { tagsArray.map(tag => <li> {tag} </li>) }
-            <br />
-              Ingredients:  { ingredientsArray.map(ingredient => <li> {ingredient} </li>) }
-            <br />
-              Instructions:  { instructionsArray.map(instruction => <li> {instruction} </li>) }
-            <br />
-            </h3>
 
+          <div className="content">
+            <div className="extra">
+              <h3>
+                Cooking Time:  { cooking_time } minutes
+              <br />
+                Servings:  { servings } 
+              <br />
+                Cuisine Type:  { cuisine_type }
+              <br />
+                Meal Type:  { meal_type }
+              <br />
+              <br />
+                Tags:  { tagsArray.map(tag => <li> {tag} </li>) }
+              <br />
+                Ingredients:  { ingredientsArray.map(ingredient => <li> {ingredient} </li>) }
+              <br />
+                Instructions:  { instructionsArray.map(instruction => <li> {instruction} </li>) }
+              <br />
+                Source:  { sourceURL }
+              <br />
+              </h3>
+            </div>
           </div>
-          </div>
+
             {/* <div className="ui star rating" data-rating="4">
               Rating: 
-          </div> */}
+            </div> */}
+            
         </div>
       </div>
 
