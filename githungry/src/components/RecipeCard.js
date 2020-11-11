@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const RecipeCard = (props) => {
 
@@ -7,18 +8,22 @@ const RecipeCard = (props) => {
     return (
       <div>
 
-      { props.recipe ? <div className="ui fluid cards" id="cards">
-        <div className="card" onClick={ () => props.showRecipeDetailClick(id) }>
-          <div className="image">
-            <img src={ image }/>
-          </div>
-          <div className="content">
-            <div className="header"> 
-              { title } 
-            </div>
-          </div>
-        </div>
-      </div> : null }
+          <Link to={`/recipes/${id}`} >
+            <div className="ui fluid cards" id="cards" >
+              <div className="card" onClick={ () => props.showRecipeDetailClick(id) } 
+                    style={{height: "600px", width: "400px"}}>
+                  <div className="image" >
+                    <img src={ image } style={{height: "500px", width: "400px"}}/>
+                  </div>
+                  <div className="content">
+                    <div className="header"> 
+                      { title } 
+                    </div>
+                  </div>
+              </div>
+            </div> 
+          </Link>
+      
       
       </div>
     )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css'
 import { Container } from 'semantic-ui-react'
 import UserDetailContainer from './container/UserDetailContainer';
@@ -22,34 +22,24 @@ class App extends Component {
   state = {
     recipes: [],
     bookmark: [],
-    clicked: false,
-    clickedRecipeId: []
+    currentRecipe: null
   }
 
-  // async componentDidMount() {
-  //   const response = await fetch(API + "recipes")
-  //   const recipes = await response.json()
-  //   this.setState({ recipes })
+  async componentDidMount() {
+    const response = await fetch(API + "recipes")
+    const recipes = await response.json()
+    this.setState({ recipes })
+  }
+
+  // componentDidMount() {
+  //   fetch(API + "recipes")
+  //   .then(res => res.json())
+  //   .then(recipes => this.setState({ recipes: recipes }))
   // }
 
-  componentDidMount() {
-    fetch(API + "recipes")
-    .then(res => res.json())
-    .then(recipes => this.setState({ recipes: recipes }))
-  }
-
-  showRecipeDetailClick = (id) => {
-    console.log(id)
-    this.setState({
-      clicked: !this.state.clicked,
-      clickedRecipeId: id
-    })
-  }
-
+  showRecipeDetailClick = (id) => { this.setState({ currentRecipe: id })}
 
   render(){
-    let id = this.state.clickedRecipeId
-    const x = true 
 
     return (
       <Container>
@@ -64,23 +54,29 @@ class App extends Component {
           
           <div>
             <Switch >
-                <Route exact path="/homepage" component={ Homepage }/>
-                <Route exact path="/login" component={ UserLogInForm } />
-                <Route exact path="/myprofile" component={ UserDetailContainer }/>
-                <Route exact path="/mypage" component={ BookmarkContainer }/>
-                <Route exact path="/addrecipe" component={ RecipeForm }/>
-                <Route exact path="/filter" component={ Filter }/>
-                <Route exact path="/recipes/:id" component={ RecipeDetails }/>
-                <Route exact path="/recipes" render={ () => x ? <RecipeContainer  recipes={ this.state.recipes } showRecipeDetailClick={ this.showRecipeDetailClick } /> : null }/>
-                {/* <Route exact path="/recipes" render={ () => this.state.recipes ? 
-                  <RecipeContainer  recipes={ this.state.recipes }
-                                    showRecipeDetailClick={ this.showRecipeDetailClick } />
-                  : null
-                }/> */}
-                {/* <Route exact path="/recipes" render={ () => {
-                  <RecipeContainer  recipes={ this.state.recipes }
-                                    showRecipeDetailClick={ this.showRecipeDetailClick } />}}/> */}
-              </Switch>
+                <Route path="/login" component={ UserLogInForm } />
+                <Route path="/myprofile" component={ UserDetailContainer }/>
+                <Route path="/mypage" component={ BookmarkContainer }/>
+                <Route path="/addrecipe" component={ RecipeForm }/>
+                <Route path="/filter" component={ Filter }/>
+
+                <Route path="/recipes/:id" render={(props) => {
+                  let id = parseInt(props.match.params.id)
+                  let currentRecipe = this.state.recipes.find(recipe => recipe.id === id)
+                  return <RecipeDetails recipe={ currentRecipe }/> 
+                }} />
+                
+                {/* <Route exact path="/recipes" render={ () => x ? <RecipeContainer  recipes={ this.state.recipes } showRecipeDetailClick={ this.showRecipeDetailClick } /> : null }/> */}
+              
+                <Route path="/recipes" render={() => {
+                  return <>
+                        <RecipeContainer  recipes={ this.state.recipes }
+                                          showRecipeDetailClick={ this.showRecipeDetailClick } />
+                        </>                
+                 }}/>
+
+                <Route exact path="/" component={ Homepage }/>
+            </Switch>
           </div>
 
           {/* <div>
@@ -88,13 +84,6 @@ class App extends Component {
                               showRecipeDetailClick={ this.showRecipeDetailClick } />
           </div> */}
         
-            <div>
-              { this.state.clicked ? 
-                <Redirect to={`/recipes/${id}`} />
-                :
-                null }  
-            </div>
-       
         </div>
       </Container>
     );

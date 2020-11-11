@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import BookmarkContainer from '../container/BookmarkContainer';
 import Homepage from '../container/Homepage';
 import RecipeForm from './RecipeForm';
@@ -26,9 +26,9 @@ const Navbar = (props) => {
             {/* </Link> */}
         </div>
         <div className="item">
-        <Link to="/addrecipe" render={() => { return <RecipeForm /> }}>
-          Add Recipe
-            </Link>
+          <Link to="/addrecipe">
+            Add Recipe
+              </Link>
         </div>
         <div className="right menu">
           <div className="item">

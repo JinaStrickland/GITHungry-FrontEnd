@@ -6,8 +6,9 @@ const RecipeContainer = (props) => {
 
   return (
 
-      <div>
-        <div className="ui four column grid">
+      // <div >
+      <div style={{position: "relative", top: "20px"}}>
+        <div className="ui three column grid">
           { props.recipes.map(recipe => 
             <div className="column">
                 <div className="ui fluid cards">

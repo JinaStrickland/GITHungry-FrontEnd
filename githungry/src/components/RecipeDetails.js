@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 
 class RecipeDetails extends Component {
 
-  state = {
-    recipe: []
-  }
+  // state = {
+  //   recipe: []
+  // }
 
-  async componentDidMount() {
-    let id = parseInt(this.props.match.params.id) 
-      const response = await fetch("http://localhost:3000/recipes/" + id)
-      const recipe = await response.json()
-      this.setState({ recipe })
-  }
+  // async componentDidMount() {
+  //   let id = parseInt(this.props.match.params.id) 
+  //     const response = await fetch("http://localhost:3000/recipes/" + id)
+  //     const recipe = await response.json()
+  //     this.setState({ recipe })
+  // }
 
   render() {
-    let { title, cuisine_type, image, meal_type, cooking_time, servings, tags, ingredients, instructions, sourceURL } = this.state.recipe 
+    let { title, cuisine_type, image, meal_type, cooking_time, servings, tags, ingredients, instructions, sourceURL } = this.props.recipe 
     let ingre = `${ingredients}`
     let ingredientsArray = ingre.split("*")
     let instr = `${instructions}`
