@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import './App.css'
 import { Container } from 'semantic-ui-react'
 import UserDetailContainer from './container/UserDetailContainer';
@@ -21,7 +21,8 @@ class App extends Component {
   state = {
     recipes: [],
     bookmark: [],
-    currentRecipe: null
+    currentRecipe: null,
+    searchedRecipes: []
   }
 
   componentDidMount() {
@@ -107,6 +108,22 @@ class App extends Component {
   // }
 
 
+  handleNewRecipe = (newRecipe) => {
+    console.log(newRecipe)
+    let updatedRecipeArray = this.state.recipes.concat(newRecipe)
+    this.setState({
+      recipes: updatedRecipeArray,
+      searchedRecipes: updatedRecipeArray
+    })
+  }
+  
+  displayUserSearch = (userSearch) => {
+    let updatedSearch = this.state.recipes.filter(recipe => recipe.title.includes(userSearch))
+    this.setState({
+      searchedRecipes: updatedSearch
+    })
+  }
+
   render(){
 
     // const bookmarkRecipe = this.state.bookmark.map(recipeid => this.state.recipes.find(recipe => recipe.id === recipeid))
@@ -119,7 +136,7 @@ class App extends Component {
             <Header />
           </div>
           <div>
-            <Navbar />
+            <Navbar displayUserSearch={this.displayUserSearch}/>
           </div>
           
           <div>
@@ -132,8 +149,11 @@ class App extends Component {
                                       bookmark={ this.state.bookmark }
                                       removeFromBookmark={ this.removeFromBookmark }
                                       getBookmarks = { this.getBookmarks } />}}/>
-                                      
-                <Route path="/addrecipe" component={ RecipeForm }/>
+                <Route path="/login" component={ UserLogInForm } />
+                <Route path="/myprofile" component={ UserDetailContainer }/>
+                <Route path="/mypage" component={ BookmarkContainer }/>
+                <Route path="/addrecipe" render={()=> <RecipeForm handleNewRecipe={this.handleNewRecipe}/>}/>
+                <Route path="/filter" component={ Filter }/>
 
                 <Route path="/recipes/:id" render={(props) => {
                   let id = parseInt(props.match.params.id)
