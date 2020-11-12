@@ -42,7 +42,7 @@ class App extends Component {
   })
 }
 
-  // showRecipeDetailClick = (recipe) => { this.setState({ currentRecipe: recipe })}
+  showRecipeDetailClick = (recipe) => { this.setState({ currentRecipe: recipe })}
 
   // ratingClick = (rec) => {
   //   const currentRating = this.state.recipes.find(recipe => recipe.id === rec.id)
@@ -161,7 +161,8 @@ class App extends Component {
                   return <RecipeDetails recipe={ currentRecipe }
                                         ratingClick={ this.ratingClick }
                                         addToBookmark={this.addToBookmark}
-                                        deleteRecipe={ this.deleteRecipe } /> 
+                                        deleteRecipe={ this.deleteRecipe }
+                                        id={id} /> 
                 }} />
                 
                 <Route path="/recipes" render={() => {

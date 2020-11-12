@@ -6,46 +6,46 @@ const API = "http://localhost:3000/"
 class RecipeDetails extends Component {
 
   state = {
-    recipe: []
+    recipe: {}
   }
 
-  // componentDidMount() {
-  //   let id = this.props.recipe.id 
-  //   fetch("http://localhost:3000/recipes/" + id)
-  //   .then(res => res.json())
-  //   .then(recipe => this.setState({ recipe }))
-  // }
+  componentDidMount() {
+    // debugger
+    // let id = parseInt(this.props.match.params.id)
+    fetch("http://localhost:3000/recipes/" + this.props.id)
+    .then(res => res.json())
+    .then(recipe => this.setState({ recipe }))
+  }
 
 
   ratingClick = (rec) => {
-    const currentRating = this.state.recipes.find(recipe => recipe.id === rec.id)
-    console.log(currentRating.rating)
+  console.log(rec)
       fetch(API + "recipes/" + rec.id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify ({
-          rating: currentRating.rating + 1
+          rating: rec.rating + 1
         })
       })
       .then(res => res.json())
       .then(updatedRecipe => {
-        this.setState(prevState => ({ 
-          recipes: [...prevState.recipes.filter(recipe => recipe.id !== rec.id), updatedRecipe] 
-        }))
+        this.setState({ 
+          recipe: updatedRecipe 
+        })
       })
   }
 
   render() {
-    let { title, cuisine_type, image, meal_type, cooking_time, servings, tags, ingredients, instructions, sourceURL, rating, id } = this.props.recipe 
+    let { title, cuisine_type, image, meal_type, cooking_time, servings, tags, ingredients, instructions, sourceURL, rating, id } = this.state.recipe 
     let ingre = `${ingredients}`
     let ingredientsArray = ingre.split("*")
     let instr = `${instructions}`
     let instructionsArray = instr.split("*")
     let foodTags = `${tags}`
     let tagsArray = foodTags.split("*")
-    let url = sourceURL.split("//")[1]
+    // let url = sourceURL.split("//")[1]
 
     return (
       
@@ -61,7 +61,7 @@ class RecipeDetails extends Component {
           </div>
 
           <div style={{position: "relative", top: "5px"}}>
-              <div className="ui blue button" onClick={ () => this.props.ratingClick(this.props.recipe) }>
+              <div className="ui blue button" onClick={ () => this.ratingClick(this.props.recipe) }>
                 <i className="star icon"></i> {`Rating:  ${rating}`} 
               </div>
               <Link to="/bookmark">
@@ -99,7 +99,7 @@ class RecipeDetails extends Component {
                 Instructions:  { instructionsArray.map(instruction => <li> {instruction} </li>) }
               </h3>
               <h5>
-                Source: <Link to={`${url}`}> { url } </Link>
+                {/* Source: <Link to={`${url}`}> { url } </Link> */}
               </h5>
               <br/>
             </div>

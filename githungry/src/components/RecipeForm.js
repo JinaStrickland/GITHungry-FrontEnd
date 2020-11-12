@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
+import { Link, NavLink, Redirect } from 'react-router-dom';
 
 class RecipeForm extends React.Component {
   state = {
@@ -12,7 +12,9 @@ class RecipeForm extends React.Component {
     cooking_time: 0, 
     servings: 0, 
     tags: "", 
-    image: ""
+    image: "",
+    rating: 0,
+    redirect: false
   }
 
   handleChange = (event) =>{
@@ -38,15 +40,21 @@ class RecipeForm extends React.Component {
         cooking_time: this.state.cooking_time,
         servings: this.state.servings,
         tags: this.state.tags,
-        image: this.state.image
+        image: this.state.image,
+        rating: 0
       })
     }
     fetch("http://localhost:3000/recipes", requestPackage)
     .then(rsp => rsp.json())
-    .then(newRecipe => this.props.handleNewRecipe(newRecipe))
+    .then(newRecipe => {
+      this.props.handleNewRecipe(newRecipe)
+      this.setState({ redirect: true })})
   }
 
   render () {
+
+    if(this.state.redirect) { return <Redirect to="/recipes"/> }
+
     return(
       <Form onSubmit={this.handleSubmit}>
         <label>Title: </label>
@@ -143,9 +151,9 @@ class RecipeForm extends React.Component {
           onChange={this.handleChange}
           />
         <br /> 
-        <Link to="/recipes">
+        {/* <Link to="/recipes"> */}
         <Form.Button>Submit</Form.Button>
-        </Link>
+        {/* </Link> */}
       </Form>
     )
   }
