@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import BookmarkContainer from '../container/BookmarkContainer';
 import Homepage from '../container/Homepage';
 import RecipeForm from './RecipeForm';
@@ -10,25 +10,25 @@ const Navbar = (props) => {
     <div>
       <div className="ui green menu">
         <div className="active item">
-          {/* <Link to="/homepage" render={() => { return <Homepage /> }}> */}
+          <NavLink to="/recipes" >
             Home
-          {/* </Link> */}
+          </NavLink>
         </div>
 
-        <div className="item">
-          {/* <Link to="/myprofile" render={() => {  }}> */}
+        {/* <div className="item">
+          <NavLink to="/profile">
             Profile
-          {/* </Link> */}
+          </NavLink>
+        </div> */}
+        <div className="item">
+        <NavLink to="/bookmark" >
+          Bookmark
+            </NavLink>
         </div>
         <div className="item">
-        {/* <Link to="/mypage" render={() => { return <BookmarkContainer /> }}> */}
-          Bookmarked
-            {/* </Link> */}
-        </div>
-        <div className="item">
-          <Link to="/addrecipe">
+          <NavLink to="/addrecipe">
             Add Recipe
-              </Link>
+              </NavLink>
         </div>
         <div className="right menu">
           <div className="item">
@@ -38,9 +38,9 @@ const Navbar = (props) => {
             </div>
           </div>
           <div className="ui item">
-          {/* <Link to="/" render={() => { }}> */}
+          {/* <NavLink to="/" }
             Logout
-            {/* </Link> */}
+            {/* </NavLink> */}
           </div>
         </div>
       </div>
