@@ -6,6 +6,12 @@ import RecipeForm from './RecipeForm';
 
 const Navbar = (props) => {
 
+  const handleSearch = event => {
+    console.log(event.target.value)
+    let userSearch = event.target.value
+    props.displayUserSearch(userSearch)
+  }
+  
   return (
     <div>
       <div className="ui green menu">
@@ -33,7 +39,7 @@ const Navbar = (props) => {
         <div className="right menu">
           <div className="item">
             <div className="ui icon input">
-              <input type="text" placeholder="Search..."/>
+              <input type="text" placeholder="Search..." onChange={handleSearch}/>
               <i className="search link icon"></i>
             </div>
           </div>
