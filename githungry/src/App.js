@@ -41,27 +41,27 @@ class App extends Component {
   })
 }
 
-  showRecipeDetailClick = (recipe) => { this.setState({ currentRecipe: recipe })}
+  // showRecipeDetailClick = (recipe) => { this.setState({ currentRecipe: recipe })}
 
-  ratingClick = (rec) => {
-    const currentRating = this.state.recipes.find(recipe => recipe.id === rec.id)
-    console.log(currentRating.rating)
-      fetch(API + "recipes/" + rec.id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify ({
-          rating: currentRating.rating + 1
-        })
-      })
-      .then(res => res.json())
-      .then(updatedRecipe => {
-        this.setState(prevState => ({ 
-          recipes: [...prevState.recipes.filter(recipe => recipe.id !== rec.id), updatedRecipe] 
-        }))
-      })
-  }
+  // ratingClick = (rec) => {
+  //   const currentRating = this.state.recipes.find(recipe => recipe.id === rec.id)
+  //   console.log(currentRating.rating)
+  //     fetch(API + "recipes/" + rec.id, {
+  //       method: "PATCH",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify ({
+  //         rating: currentRating.rating + 1
+  //       })
+  //     })
+  //     .then(res => res.json())
+  //     .then(updatedRecipe => {
+  //       this.setState(prevState => ({ 
+  //         recipes: [...prevState.recipes.filter(recipe => recipe.id !== rec.id), updatedRecipe] 
+  //       }))
+  //     })
+  // }
 
   addToBookmark = (id) => {
     if(!this.state.bookmark.find(recipeId => recipeId === id)) {

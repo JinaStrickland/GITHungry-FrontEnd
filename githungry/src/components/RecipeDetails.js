@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
+const API = "http://localhost:3000/"
+
 class RecipeDetails extends Component {
 
-  // state = {
-  //   recipe: []
-  // }
+  state = {
+    recipe: []
+  }
 
   // componentDidMount() {
   //   let id = this.props.recipe.id 
@@ -14,25 +16,26 @@ class RecipeDetails extends Component {
   //   .then(recipe => this.setState({ recipe }))
   // }
 
-  // ratingClick = () => {
-  //   let id = this.state.recipe.id
-  //   let rating = this.state.recipe.rating 
-  // // console.log(this.state.recipe)
 
-  //   fetch("http://localhost:3000/recipes/" + id, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/json"
-  //     },
-  //     body: JSON.stringify ({
-  //       rating: ++rating 
-  //     })
-  //   })
-  //   .then(res => res.json())
-  //   .then(updatedRecipe => {
-  //     this.setState({ updatedRecipe })})
-  // }
+  ratingClick = (rec) => {
+    const currentRating = this.state.recipes.find(recipe => recipe.id === rec.id)
+    console.log(currentRating.rating)
+      fetch(API + "recipes/" + rec.id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify ({
+          rating: currentRating.rating + 1
+        })
+      })
+      .then(res => res.json())
+      .then(updatedRecipe => {
+        this.setState(prevState => ({ 
+          recipes: [...prevState.recipes.filter(recipe => recipe.id !== rec.id), updatedRecipe] 
+        }))
+      })
+  }
 
   render() {
     let { title, cuisine_type, image, meal_type, cooking_time, servings, tags, ingredients, instructions, sourceURL, rating, id } = this.props.recipe 
