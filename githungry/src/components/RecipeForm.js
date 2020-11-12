@@ -1,220 +1,154 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
+import { Form } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 
-const foodTags = ["Soups and Stews", "Poultry", "Fish", "Healthy", "Dairy Free", "Gluten Free", "Vegan", "Vegetarian", "Egg Free", "Seafood"]
+class RecipeForm extends React.Component {
+  state = {
+    title: "", 
+    ingredients: "", 
+    instructions: "", 
+    cuisine_type: "American",
+    meal_type: "Appetizer", 
+    cooking_time: 0, 
+    servings: 0, 
+    tags: "", 
+    image: ""
+  }
 
-const cuisineTags = ["Appetizer", ""]
+  handleChange = (event) =>{
+    // console.log(event.target.name)
+    const {name, value} = event.target
+    this.setState({
+      [name]: value
+    })
+  }
 
-const initialValues = {
-  title: "", 
-  ingredients: [""], 
-  instructions: [""], 
-  cuisine_type: "",
-  meal_type: "", 
-  cooking_time: 0, 
-  servings: 0, 
-  tags: [], 
-  image: ""
+  handleSubmit = event => {
+    //when click submit, add the data we've put in to our database
+    event.preventDefault()
+    let requestPackage = {
+      headers: {'Content-Type':'application/json'},
+      method: 'POST',
+      body: JSON.stringify({
+        title: this.state.title, 
+        ingredients: this.state.ingredients,
+        instructions: this.state.instructions, 
+        cuisine_type: this.state.cuisine_type,
+        meal_type: this.state.meal_type,
+        cooking_time: this.state.cooking_time,
+        servings: this.state.servings,
+        tags: this.state.tags,
+        image: this.state.image
+      })
+    }
+    fetch("http://localhost:3000/recipes", requestPackage)
+    .then(rsp => rsp.json())
+    .then(newRecipe => this.props.handleNewRecipe(newRecipe))
+  }
+
+  render () {
+    return(
+      <Form onSubmit={this.handleSubmit}>
+        <label>Title: </label>
+        <Form.Input
+          type="text" 
+          value={this.state.title} 
+          name="title" 
+          placeholder="Title..." 
+          onChange={this.handleChange}
+          />
+        <br />
+        <br />
+        <label>Ingredients: </label>
+        <Form.Input
+          type="textbox" 
+          value={this.state.ingredients} 
+          name="ingredients" 
+          placeholder="Ingredients" 
+          onChange={this.handleChange}
+          />
+        <br /> 
+        <br />
+        <label>Instructions: </label>
+        <Form.Input
+          type="textbox" 
+          value={this.state.instructions} 
+          name="instructions" 
+          placeholder="Instructions..." 
+          onChange={this.handleChange}
+          />
+        <br /> 
+        <br />
+        <label>Type of Cuisine</label>
+                <select 
+                    value={this.state.cuisine_type}
+                    onChange={this.handleChange}
+                    name="cuisine_type"
+                >
+                    <option value="American">American</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Soul">Soul</option>
+                    <option value="Creole">Creole/Cajun</option>
+                    <option value="French">French</option>
+                    <option value="Greek">Greek</option>
+                    <option value="Carribean">Carribean</option>
+                    <option value="Arabic">Arabic</option>
+                </select>
+        <br /> 
+        <label>Type of Meal:</label>
+                <select 
+                    value={this.state.meal_type}
+                    onChange={this.handleChange}
+                    name="meal_type"
+                >
+                    <option value="Appetizer">Appetizer</option>
+                    <option value="Sides">Sides</option>
+                    <option value="Main Dish">Main Dish</option>
+                    <option value="Dessert">Dessert</option>
+                </select>
+        <br /> 
+        <label>Total Cooking Time: </label>
+        <Form.Input
+          type="number" 
+          value={this.state.cooking_time} 
+          name="cooking_time" 
+          onChange={this.handleChange}
+          />
+        <br /> 
+        <label>Servings: </label>
+        <Form.Input
+          type="number" 
+          value={this.state.servings} 
+          name="servings" 
+          onChange={this.handleChange}
+          />
+        <br /> 
+        <label>Tags: </label> 
+        <Form.Input
+          type="text" 
+          value={this.state.tags} 
+          name="tags" 
+          placeholder="Healthy, Dairy Free, Vegan, etc..." 
+          onChange={this.handleChange}
+          />
+        <br /> 
+        <label>Image: </label>
+        <Form.Input
+          type="text" 
+          value={this.state.image} 
+          name="image" 
+          placeholder="Image URL..." 
+          onChange={this.handleChange}
+          />
+        <br /> 
+        <Link to="/recipes">
+        <Form.Button>Submit</Form.Button>
+        </Link>
+      </Form>
+    )
+  }
 }
-
-const onSubmit = values => {
-  console.log("Form values", values)
-}
-
-const validate = values => {
-  let errors = {}
-  if(!values.title){
-    errors.title = "Title is required!"
-  }
-  if(!values.ingredients){
-    errors.ingredients = "Ingredients are required!"
-  }
-  if(!values.instructions){
-    errors.instructions = "Instructions are required!"
-  }
-  if(!values.cuisine_type){
-    errors.cuisine_type = "Please choose one of the following."
-  }
-  if(!values.meal_type){
-    errors.meal_type = "Please choose one of the following."
-  }
-  if(!values.tags){
-    errors.tags = "Please choose the following." 
-  }
-  if(!values.image){
-    errors.image = "Please upload an image"
-  }
-  return errors
-}
-
-function RecipeForm() {
-  // const formik = useFormik({
-  //   initialValues,
-  //   onSubmit,
-  //   validate
-  // )}
-  return(
-    <Formik
-    initialValues={initialValues}
-    onSubmit={onSubmit}
-    validate={validate}>
-        <Form className="ui form">
-          <div className='form-control'>
-          <label>Title: </label>
-          <Field
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Title..."
-            />
-          <ErrorMessage name="title">
-            {errorMsg => <div className="error">{errorMsg}</div>}
-          </ErrorMessage>
-          </div>
-          <br/>
-          <div className='form-control'>
-            <label>Ingredients: </label>
-            <FieldArray name="ingredients">
-              {fieldArrayProps => {
-                console.log('fieldArrayProps', fieldArrayProps)
-                const {push, remove, form} = fieldArrayProps
-                const {values} = form
-                const {ingredients} = values
-                return (
-                <div>
-                  {ingredients.map((ingredient, index) => (
-                    <div key={index}>
-                      <Field name={`ingredients[${index}]`} />
-                      {index > 0 && (
-                        <button type='button' onClick={() => remove(index)}>
-                          {' '}
-                          x{' '}
-                        </button>
-                      )}
-                      <button type='button' onClick={() => push('')}>
-                        {' '}
-                        +{' '}
-                      </button>
-                    </div>
-                ))}
-                </div>
-                )
-            }}
-          </FieldArray>
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Instructions: </label>
-          <FieldArray name="instructions">
-            {fieldArrayProps => {
-              const {push, remove, form} = fieldArrayProps
-              const {values} = form
-              const {instructions} = values
-              return(
-                <div>
-                  {instructions.map((instruction, index) => (
-                    <div key={index}>
-                      <Field name={`instructions[${index}]`}/>
-                      {index > 0 && (
-                        <button type='button' onClick={() => remove(index)}>
-                          {' '}
-                          x{' '}
-                        </button>
-                      )}
-                      <button type='button' onClick={() => push(' ')}>
-                        {' '}
-                        +{' '}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )
-            }}
-          </FieldArray>
-
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Type Of Cuisine: </label>
-            <Field
-              type="text"
-              id="cuisine_type"
-              name="cuisine_type"
-              placeholder="Cuisine Type"
-              />
-            <ErrorMessage name="cuisine_type">
-              {errorMsg => <div className="error">{errorMsg}</div>}
-            </ErrorMessage>
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Type of Meal: </label>
-            <Field
-              type="text"
-              id="meal_type"
-              name="meal_type"
-              />
-            <ErrorMessage name="meal_type">
-              {errorMsg => <div className="error">{errorMsg}</div>}
-            </ErrorMessage>
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Total Cooking Time: </label>
-            <Field
-              type="number"
-              id="cooking_time"
-              name="cooking_time"
-              />
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Servings: </label>
-            <Field
-                type="number"
-                id="servings"
-                name="servings"
-              />
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Select Tags: </label>
-            {foodTags.map(foodTag => {
-            return (
-            <div>
-              <div> {foodTag} </div>
-              <Field 
-                  className="ui checkbox"
-                  type="checkbox"
-                  id={foodTag}
-                  name={foodTag}
-                /> 
-            </div>
-              )
-            })
-          }
-            <ErrorMessage name="tags">
-              {errorMsg => <div className="error">{errorMsg}</div>}
-            </ErrorMessage>
-          </div>
-          <br/>
-          <div className='form-control'>
-          <label>Image URL: </label>
-            <Field
-                type="text"
-                id="image"
-                name="image"
-              />
-            <ErrorMessage name="image">
-              {errorMsg => <div className="error">{errorMsg}</div>}
-            </ErrorMessage>
-          </div>
-          <br/>
-          <button>Submit</button>
-        </Form>
-    </Formik>
-  )
-}
-
 
 export default RecipeForm
