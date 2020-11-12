@@ -24,57 +24,93 @@ class App extends Component {
     currentRecipe: null
   }
 
-  async componentDidMount() {
-    const response = await fetch(API + "recipes")
-    const recipes = await response.json()
-    this.setState({ recipes })
+  componentDidMount() {
+    fetch(API + "recipes")
+    .then(res => res.json())
+    .then(recipes => this.setState({ recipes }))
   }
-
-  showRecipeDetailClick = (id) => { this.setState({ currentRecipe: id })}
-
-  ratingClick = (id) => {
-    // let currentRating = this.state.recipes.find(recipe => recipe.id === id)
   
-    //   fetch("http://localhost:3000/recipes/" + id, {
-    //     method: "PATCH",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Accept": "application/json"
-    //     },
-    //     body: JSON.stringify ({
-    //       rating: ++currentRating 
-    //     })
-    //   })
-    //   .then(res => res.json())
-    //   .then(updatedRecipe => {
-    //     this.setState({ 
-    //       recipes: [...this.state.recipes.filter(recipe => recipe.id !== id), updatedRecipe] 
-    //     })
-    //   })
+  deleteRecipe = (recipe) => {
+    fetch(API + "recipes/" + recipe.id, {
+      method: "DELETE"
+    })
+    .then(() => {
+      this.setState(prevState => ({ 
+        recipes: [...prevState.recipes].filter(rec => rec.id !== recipe.id) 
+      }))
+  })
+}
+
+  showRecipeDetailClick = (recipe) => { this.setState({ currentRecipe: recipe })}
+
+  ratingClick = (rec) => {
+    const currentRating = this.state.recipes.find(recipe => recipe.id === rec.id)
+    console.log(currentRating.rating)
+      fetch(API + "recipes/" + rec.id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify ({
+          rating: currentRating.rating + 1
+        })
+      })
+      .then(res => res.json())
+      .then(updatedRecipe => {
+        this.setState(prevState => ({ 
+          recipes: [...prevState.recipes.filter(recipe => recipe.id !== rec.id), updatedRecipe] 
+        }))
+      })
   }
 
   addToBookmark = (id) => {
-    console.log(this.state.bookmark)
-    console.log(id)
-
     if(!this.state.bookmark.find(recipeId => recipeId === id)) {
-      this.setState({
-        bookmark: [...this.state.bookmark, id]
+      fetch("http://localhost:3000/bookmarks/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify ({
+          recipe_id: id 
+        })
+      })
+      .then(res => res.json())
+      .then(bookmark => { 
+        this.setState(prevState => ({
+          bookmark: [...prevState.bookmark, id]
+        }))
       })
     }
   }
 
-  removeFromBookmark = (id) => {
-    this.setState({
-      bookmark: [...this.state.bookmark].filter(bookmarkId => bookmarkId !== id)
-    })
-  }
+  // getBookmarks = async () => {
+  //   const res = await fetch("http://localhost:3000/bookmarks/")
+  //   const data = await res.json()
+  //   return data 
+  // }
+
+  // addToBookmark = (id) => {
+  //   const previousState = this.state.bookmark
+    
+  //   if(!previousState.find(recipeId => recipeId === id)) {
+  //     previousState.push(id)
+  //     this.setState({
+  //       bookmark: previousState
+  //     })
+  //   }
+  // }
+
+  // removeFromBookmark = (recipe) => {
+  //   this.setState({
+  //     bookmark: [...this.state.bookmark].filter(bookmarkId => bookmarkId !== id)
+  //   })
+  // }
+
 
   render(){
 
-    let bookmarkRecipe = this.state.bookmark.map(recipeid => this.state.recipes.find(recipe => recipe.id === recipeid))
+    // const bookmarkRecipe = this.state.bookmark.map(recipeid => this.state.recipes.find(recipe => recipe.id === recipeid))
     
-
     return (
       <Container>
         <div >
@@ -88,20 +124,24 @@ class App extends Component {
           
           <div>
             <Switch >
-                <Route path="/login" component={ UserLogInForm } />
-                <Route path="/profile" component={ UserDetailContainer }/>
-                <Route path="/bookmark" render={(props) => {
-                   <BookmarkContainer addToBookmark={ this.addToBookmark }
-                                      bookmarkRecipe={ bookmarkRecipe }
-                                      removeFromBookmark={ this.removeFromBookmark } />}}/>
+                {/* <Route path="/login" component={ UserLogInForm } />
+                <Route path="/profile" component={ UserDetailContainer }/> */}
+                {/* <Route path="/filter" component={ Filter }/> */}
+                <Route path="/bookmark" render={() => {
+                   return <BookmarkContainer addToBookmark={ this.addToBookmark }
+                                      bookmark={ this.state.bookmark }
+                                      removeFromBookmark={ this.removeFromBookmark }
+                                      getBookmarks = { this.getBookmarks } />}}/>
+                                      
                 <Route path="/addrecipe" component={ RecipeForm }/>
-                <Route path="/filter" component={ Filter }/>
+
                 <Route path="/recipes/:id" render={(props) => {
                   let id = parseInt(props.match.params.id)
                   let currentRecipe = this.state.recipes.find(recipe => recipe.id === id)
                   return <RecipeDetails recipe={ currentRecipe }
                                         ratingClick={ this.ratingClick }
-                                        addToBookmark={this.addToBookmark} /> 
+                                        addToBookmark={this.addToBookmark}
+                                        deleteRecipe={ this.deleteRecipe } /> 
                 }} />
                 
                 <Route path="/recipes" render={() => {
@@ -112,12 +152,6 @@ class App extends Component {
                  }}/>
             </Switch>
           </div>
-
-          {/* <div>
-            <RecipeContainer  recipes={ this.state.recipes }
-                              showRecipeDetailClick={ this.showRecipeDetailClick } />
-          </div> */}
-        
         </div>
       </Container>
     );

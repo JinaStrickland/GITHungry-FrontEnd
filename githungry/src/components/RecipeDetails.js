@@ -46,22 +46,34 @@ class RecipeDetails extends Component {
 
     return (
       
+      <div style={{position: "relative", top: "20px"}}>
       <div id="detail-card">
         <div className="ui centered" >
           <div className="content">
             <h1 className="header">{ title }</h1>
           </div>
+          <br/>
           <div className="image" id="detail-image">
             <img src={ image } alt=""/>
           </div>
 
-          <div>
-              <div className="ui teal button" tabindex="0" onClick={ () => this.props.addToBookmark(id) }>
-                <i className="heart icon"></i> Add to Bookmark
-              </div>
-              <div className="ui red button" onClick={ () => this.props.ratingClick(id) }>
+          <div style={{position: "relative", top: "5px"}}>
+              <div className="ui blue button" onClick={ () => this.props.ratingClick(this.props.recipe) }>
                 <i className="star icon"></i> {`Rating:  ${rating}`} 
               </div>
+              <Link to="/bookmark">
+                <div className="ui teal button" tabindex="0" onClick={ () => this.props.addToBookmark(this.props.recipe) }>
+                  <i className="heart icon"></i> Add to Bookmark
+                </div>
+              </Link>
+              <div className="ui yellow button" >
+                <i className="edit icon"></i> Edit This Recipe 
+              </div>
+              <Link to="/recipes">
+                <div className="ui grey button" onClick={ () => this.props.deleteRecipe(this.props.recipe) }>
+                  <i className="ban icon"></i> Delete This Recipe 
+                </div>
+              </Link>
           </div>
          
           <br />
@@ -91,6 +103,7 @@ class RecipeDetails extends Component {
           </div>
 
         </div>
+      </div>
       </div>
     )
   }

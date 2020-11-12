@@ -7,8 +7,8 @@ import RecipeForm from './RecipeForm';
 const Navbar = (props) => {
 
   return (
-    <div>
-      <div className="ui green menu">
+    <div style={{position: "relative", width: "1160px"}}>
+      <div className="ui grey inverted huge menu">
         <div className="active item">
           <NavLink to="/recipes" >
             Home
